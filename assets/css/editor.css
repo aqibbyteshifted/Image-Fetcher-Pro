@@ -1,0 +1,1046 @@
+/* ============================================
+   Stock Image Fetcher Pro - Editor Styles
+   2026 Modern Design System
+   ============================================ */
+
+:root {
+    --sifp-primary: #6366f1;
+    --sifp-primary-dark: #4f46e5;
+    --sifp-primary-light: #818cf8;
+    --sifp-success: #10b981;
+    --sifp-warning: #f59e0b;
+    --sifp-error: #ef4444;
+    --sifp-gray-50: #f9fafb;
+    --sifp-gray-100: #f3f4f6;
+    --sifp-gray-200: #e5e7eb;
+    --sifp-gray-300: #d1d5db;
+    --sifp-gray-400: #9ca3af;
+    --sifp-gray-500: #6b7280;
+    --sifp-gray-600: #4b5563;
+    --sifp-gray-700: #374151;
+    --sifp-gray-800: #1f2937;
+    --sifp-gray-900: #111827;
+    --sifp-radius: 8px;
+    --sifp-radius-sm: 6px;
+    --sifp-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --sifp-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --sifp-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --sifp-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============================================
+   Search Bar - Modern Design
+   ============================================ */
+
+.sifp-search-bar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.sifp-search-input-wrapper {
+    position: relative;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    background: white;
+    border: 2px solid var(--sifp-gray-200);
+    border-radius: var(--sifp-radius);
+    transition: var(--sifp-transition);
+    overflow: hidden;
+}
+
+.sifp-search-input-wrapper:focus-within {
+    border-color: var(--sifp-primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.sifp-search-icon {
+    display: none;
+    position: absolute;
+    left: 12px;
+    color: var(--sifp-gray-400);
+    pointer-events: none;
+    transition: var(--sifp-transition);
+}
+
+.sifp-search-input-wrapper:focus-within .sifp-search-icon {
+    color: var(--sifp-primary);
+}
+
+.sifp-search-input {
+    flex: 1;
+    padding: 12px 40px 12px 12px;
+    border: none;
+    background: transparent;
+    font-size: 14px;
+    color: var(--sifp-gray-900);
+    outline: none;
+}
+
+.sifp-source-selector {
+    padding: 8px 32px 8px 12px;
+    border: none;
+    border-right: 2px solid var(--sifp-gray-100);
+    background: var(--sifp-gray-50);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--sifp-gray-700);
+    cursor: pointer;
+    outline: none;
+    appearance: none;
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="%236b7280"><path d="M5 7l5 5 5-5H5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 12px;
+}
+
+.sifp-source-selector:hover {
+    background-color: var(--sifp-gray-100);
+}
+
+.sifp-search-input::placeholder {
+    color: var(--sifp-gray-400);
+}
+
+.sifp-clear-search {
+    position: absolute;
+    right: 8px;
+    padding: 6px;
+    background: transparent;
+    border: none;
+    color: var(--sifp-gray-400);
+    cursor: pointer;
+    border-radius: 4px;
+    transition: var(--sifp-transition);
+}
+
+.sifp-clear-search:hover {
+    background: var(--sifp-gray-100);
+    color: var(--sifp-gray-600);
+}
+
+.sifp-search-btn {
+    padding: 12px 20px;
+    background: var(--sifp-primary);
+    color: white;
+    border: none;
+    border-radius: var(--sifp-radius);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--sifp-transition);
+    white-space: nowrap;
+}
+
+.sifp-search-btn:hover {
+    background: var(--sifp-primary-dark);
+    transform: translateY(-1px);
+    box-shadow: var(--sifp-shadow);
+}
+
+.sifp-search-btn:active {
+    transform: translateY(0);
+}
+
+.sifp-search-btn svg {
+    transition: var(--sifp-transition);
+}
+
+.sifp-search-btn.loading svg {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ============================================
+   Filter Bar - Compact & Modern
+   ============================================ */
+
+.sifp-filter-bar {
+    padding: 16px;
+    background: var(--sifp-gray-50);
+    border-radius: var(--sifp-radius);
+    margin-bottom: 16px;
+    border: 1px solid var(--sifp-gray-200);
+    animation: slideDown 0.3s ease-out;
+}
+
+.sifp-filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sifp-filter-group label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--sifp-gray-700);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.sifp-filter-buttons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.sifp-filter-btn {
+    padding: 8px 12px;
+    background: white;
+    border: 2px solid var(--sifp-gray-200);
+    border-radius: var(--sifp-radius-sm);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--sifp-gray-700);
+    cursor: pointer;
+    transition: var(--sifp-transition);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.sifp-filter-btn:hover {
+    border-color: var(--sifp-gray-300);
+    background: var(--sifp-gray-50);
+}
+
+.sifp-filter-btn.active {
+    background: var(--sifp-primary);
+    border-color: var(--sifp-primary);
+    color: white;
+}
+
+.sifp-filter-btn svg {
+    opacity: 0.6;
+}
+
+/* ============================================
+   Results Header
+   ============================================ */
+
+.sifp-results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding: 8px 0;
+}
+
+.sifp-results-count {
+    font-size: 13px;
+    color: var(--sifp-gray-600);
+    font-weight: 500;
+}
+
+.sifp-toggle-filters {
+    padding: 6px 12px;
+    background: white;
+    border: 1px solid var(--sifp-gray-200);
+    border-radius: var(--sifp-radius-sm);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--sifp-gray-700);
+    cursor: pointer;
+    transition: var(--sifp-transition);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.sifp-toggle-filters:hover {
+    background: var(--sifp-gray-50);
+    border-color: var(--sifp-gray-300);
+}
+
+/* ============================================
+   Results Grid - Masonry-style
+   ============================================ */
+
+.sifp-results-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.sifp-result-item {
+    position: relative;
+    cursor: pointer;
+    border-radius: var(--sifp-radius);
+    overflow: hidden;
+    aspect-ratio: 1/1;
+    background: var(--sifp-gray-100);
+    transition: var(--sifp-transition);
+    border: 3px solid transparent;
+}
+
+.sifp-result-item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.6) 100%);
+    opacity: 0;
+    transition: var(--sifp-transition);
+    z-index: 1;
+}
+
+.sifp-result-item:hover::before {
+    opacity: 1;
+}
+
+.sifp-result-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--sifp-transition);
+}
+
+.sifp-result-item:hover img {
+    transform: scale(1.05);
+}
+
+.sifp-result-item.is-selected {
+    border-color: var(--sifp-primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.sifp-result-item.is-selected::after {
+    content: '';
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 24px;
+    height: 24px;
+    background: var(--sifp-primary);
+    border-radius: 50%;
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="white"><path d="M4 8l2 2 6-6" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/></svg>');
+    background-size: 14px;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 2;
+    animation: checkmark 0.3s ease-out;
+}
+
+@keyframes checkmark {
+    0% {
+        transform: scale(0) rotate(-45deg);
+        opacity: 0;
+    }
+
+    50% {
+        transform: scale(1.2) rotate(0deg);
+    }
+
+    100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+/* Skeleton Loader */
+.sifp-skeleton {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            var(--sifp-gray-100) 25%,
+            var(--sifp-gray-200) 50%,
+            var(--sifp-gray-100) 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s ease-in-out infinite;
+}
+
+@keyframes loading {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* ============================================
+   Preview Panel - Glass Morphism
+   ============================================ */
+
+.sifp-preview-panel {
+    position: relative;
+    background: white;
+    border: 2px solid var(--sifp-gray-200);
+    border-radius: var(--sifp-radius);
+    padding: 20px;
+    margin-bottom: 16px;
+    animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: var(--sifp-shadow-lg);
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.sifp-preview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--sifp-gray-100);
+}
+
+.sifp-preview-header h4 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--sifp-gray-900);
+}
+
+.sifp-close-preview {
+    padding: 6px;
+    background: transparent;
+    border: none;
+    color: var(--sifp-gray-400);
+    cursor: pointer;
+    border-radius: 4px;
+    transition: var(--sifp-transition);
+}
+
+.sifp-close-preview:hover {
+    background: var(--sifp-gray-100);
+    color: var(--sifp-gray-600);
+}
+
+.sifp-preview-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.sifp-preview-image-container {
+    position: relative;
+    border-radius: var(--sifp-radius);
+    overflow: hidden;
+    background: var(--sifp-gray-100);
+}
+
+.sifp-preview-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: var(--sifp-radius);
+}
+
+.sifp-image-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 12px;
+    background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
+    color: white;
+    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.sifp-dimensions,
+.sifp-photographer {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* ============================================
+   SEO Score Card - Circular Progress
+   ============================================ */
+
+.sifp-seo-card {
+    padding: 16px;
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    border: 2px solid #bae6fd;
+    border-radius: var(--sifp-radius);
+}
+
+.sifp-seo-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    color: #0369a1;
+}
+
+.sifp-seo-header h5 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.sifp-seo-score {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.sifp-score-circle {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+}
+
+.sifp-score-ring {
+    transform: rotate(-90deg);
+}
+
+.sifp-score-progress {
+    transition: stroke-dashoffset 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sifp-score-number {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--sifp-gray-900);
+}
+
+.sifp-score-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sifp-score-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+}
+
+.sifp-score-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--sifp-gray-700);
+}
+
+.sifp-score-value {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--sifp-gray-900);
+    padding: 2px 8px;
+    background: white;
+    border-radius: 4px;
+}
+
+.sifp-alt-status.good {
+    color: var(--sifp-success);
+}
+
+.sifp-alt-status.missing {
+    color: var(--sifp-error);
+}
+
+/* ============================================
+   Optimization Card - Toggle Switches
+   ============================================ */
+
+.sifp-optimization-card {
+    padding: 16px;
+    background: var(--sifp-gray-50);
+    border: 2px solid var(--sifp-gray-200);
+    border-radius: var(--sifp-radius);
+}
+
+.sifp-card-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    color: var(--sifp-gray-700);
+}
+
+.sifp-card-header h5 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.sifp-toggle-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--sifp-gray-200);
+}
+
+.sifp-toggle-option:last-child {
+    border-bottom: none;
+}
+
+.sifp-toggle-option label {
+    position: relative;
+    width: 44px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+.sifp-toggle-option input[type="checkbox"] {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.sifp-toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--sifp-gray-300);
+    transition: var(--sifp-transition);
+    border-radius: 24px;
+}
+
+.sifp-toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: var(--sifp-transition);
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+input:checked+.sifp-toggle-slider {
+    background-color: var(--sifp-primary);
+}
+
+input:checked+.sifp-toggle-slider:before {
+    transform: translateX(20px);
+}
+
+.sifp-toggle-label {
+    flex: 1;
+}
+
+.sifp-toggle-label strong {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--sifp-gray-900);
+    margin-bottom: 2px;
+}
+
+.sifp-toggle-label small {
+    font-size: 12px;
+    color: var(--sifp-gray-600);
+}
+
+/* Quality Slider */
+.sifp-quality-slider {
+    padding: 16px 0;
+}
+
+.sifp-quality-slider label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--sifp-gray-700);
+    margin-bottom: 12px;
+}
+
+.sifp-quality-input {
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--sifp-gray-200);
+    outline: none;
+    -webkit-appearance: none;
+}
+
+.sifp-quality-input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--sifp-primary);
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: var(--sifp-transition);
+}
+
+.sifp-quality-input::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+}
+
+.sifp-quality-input::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--sifp-primary);
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.sifp-quality-value {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--sifp-primary);
+}
+
+/* ============================================
+   SEO Fields - Enhanced Input Design
+   ============================================ */
+
+.sifp-seo-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.sifp-field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.sifp-field-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--sifp-gray-700);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sifp-field-helper {
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--sifp-gray-500);
+}
+
+.sifp-filename-input,
+.sifp-alt-input {
+    padding: 10px 12px;
+    border: 2px solid var(--sifp-gray-200);
+    border-radius: var(--sifp-radius-sm);
+    font-size: 14px;
+    color: var(--sifp-gray-900);
+    transition: var(--sifp-transition);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.sifp-filename-input:focus,
+.sifp-alt-input:focus {
+    outline: none;
+    border-color: var(--sifp-primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.sifp-alt-input {
+    resize: vertical;
+    min-height: 60px;
+}
+
+.sifp-alt-input-wrapper {
+    position: relative;
+}
+
+.sifp-ai-generate-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    padding: 6px 10px;
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    color: white;
+    border: none;
+    border-radius: var(--sifp-radius-sm);
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: var(--sifp-transition);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.sifp-ai-generate-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(245, 158, 11, 0.3);
+}
+
+.sifp-ai-generate-btn svg {
+    animation: sparkle 2s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.2) rotate(20deg);
+    }
+}
+
+.sifp-char-count {
+    font-size: 11px;
+    color: var(--sifp-gray-500);
+    text-align: right;
+}
+
+.sifp-char-current {
+    font-weight: 600;
+    color: var(--sifp-gray-700);
+}
+
+/* ============================================
+   Action Buttons
+   ============================================ */
+
+.sifp-action-buttons {
+    display: flex;
+    gap: 8px;
+    padding-top: 4px;
+}
+
+.sifp-download-btn {
+    flex: 1;
+    padding: 14px 20px;
+    background: linear-gradient(135deg, var(--sifp-primary) 0%, var(--sifp-primary-dark) 100%);
+    color: white;
+    border: none;
+    border-radius: var(--sifp-radius);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: var(--sifp-transition);
+    box-shadow: 0 4px 6px rgba(99, 102, 241, 0.2);
+}
+
+.sifp-download-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 12px rgba(99, 102, 241, 0.3);
+}
+
+.sifp-download-btn:active {
+    transform: translateY(0);
+}
+
+.sifp-download-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+/* ============================================
+   Toast Notifications
+   ============================================ */
+
+.sifp-toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 14px 20px;
+    background: white;
+    border-radius: var(--sifp-radius);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 99999;
+    animation: slideInRight 0.3s ease-out;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 300px;
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.sifp-toast.success {
+    border-left: 4px solid var(--sifp-success);
+    color: var(--sifp-success);
+}
+
+.sifp-toast.error {
+    border-left: 4px solid var(--sifp-error);
+    color: var(--sifp-error);
+}
+
+.sifp-toast.warning {
+    border-left: 4px solid var(--sifp-warning);
+    color: var(--sifp-warning);
+}
+
+/* ============================================
+   Widget Preview (Frontend)
+   ============================================ */
+
+.sifp-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    background: var(--sifp-gray-50);
+    border: 2px dashed var(--sifp-gray-300);
+    border-radius: var(--sifp-radius);
+    color: var(--sifp-gray-500);
+}
+
+.sifp-placeholder i {
+    font-size: 48px;
+    margin-bottom: 12px;
+    color: var(--sifp-gray-400);
+}
+
+.sifp-placeholder p {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.sifp-image-wrapper {
+    position: relative;
+    line-height: 0;
+}
+
+.sifp-stock-image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Remove default Elementor padding if needed */
+.elementor-widget-stock_image_fetcher_pro_widget .elementor-widget-container {
+    padding: 0 !important;
+}
+
+/* ============================================
+   Loading States
+   ============================================ */
+
+.sifp-loading {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--sifp-gray-600);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.sifp-loading::after {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid var(--sifp-gray-300);
+    border-top-color: var(--sifp-primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-left: 8px;
+    vertical-align: middle;
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+
+@media (max-width: 1024px) {
+    .sifp-results-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .sifp-search-bar {
+        flex-direction: column;
+    }
+
+    .sifp-results-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .sifp-seo-score {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* ============================================
+   Dark Mode Support (Optional)
+   ============================================ */
+
+@media (prefers-color-scheme: dark) {
+
+    .sifp-preview-panel,
+    .sifp-search-input-wrapper,
+    .sifp-filter-bar {
+        background: var(--sifp-gray-800);
+        border-color: var(--sifp-gray-700);
+    }
+
+    .sifp-preview-header h4,
+    .sifp-card-header h5,
+    .sifp-field-label {
+        color: var(--sifp-gray-100);
+    }
+}

@@ -1,0 +1,18 @@
+/* ============================================
+   Stock Image Fetcher Pro - Frontend Styles
+   ============================================ */
+
+.sifp-image-wrapper {
+    position: relative;
+    line-height: 0;
+    overflow: hidden;
+}
+
+.sifp-stock-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    max-width: 100%;
+}
+
+/* Glassmorphism support is handled via inline styles and selectors in class-widget.php */
