@@ -21,72 +21,88 @@ class Control extends \Elementor\Base_Control
     public function content_template()
     {
         ?>
-        <div class="elementor-control-field">
-            <label class="elementor-control-title">{{{ data.label }}}</label>
+        <div class="sifp-control-wrapper">
             <div class="elementor-control-input-wrapper">
 
-                <!-- Search Bar with Source Selector -->
-                <div class="sifp-search-wrapper">
-                    <div class="sifp-source-selector">
+                <!-- Unified Search & Source Group -->
+                <div class="sifp-search-group">
+                    <div class="sifp-input-cluster">
                         <select class="sifp-source-input">
                             <option value="freepik">Freepik</option>
                             <option value="pexels">Pexels</option>
                             <option value="unsplash">Unsplash</option>
                         </select>
-                    </div>
-                    <div class="sifp-search-bar">
-                        <div class="sifp-search-input-wrapper">
-                            <svg class="sifp-search-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                <path d="M9 17A8 8 0 1 0 9 1a8 8 0 0 0 0 16zM18 18l-4-4" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" />
-                            </svg>
+                        <div class="sifp-search-field-wrapper">
                             <input type="text" class="sifp-search-input"
-                                placeholder="<?php esc_attr_e('Search keywords...', 'stock-image-fetcher-pro'); ?>" />
+                                placeholder="<?php esc_attr_e('Find your next image...', 'stock-image-fetcher-pro'); ?>" />
                             <button type="button" class="sifp-clear-search" style="display:none;">
-                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
                                     <path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" />
                                 </svg>
                             </button>
                         </div>
-                        <button type="button" class="sifp-search-btn">
-                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                                <path d="M8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12zM16 16l-3.5-3.5" stroke="currentColor"
-                                    stroke-width="2" stroke-linecap="round" />
-                            </svg>
-                            <span><?php esc_html_e('Search', 'stock-image-fetcher-pro'); ?></span>
-                        </button>
                     </div>
-                </div>
 
-                <!-- Filter Bar -->
-                <div class="sifp-filter-bar" style="display:none;">
-                    <div class="sifp-filter-group">
-                        <label><?php esc_html_e('Orientation', 'stock-image-fetcher-pro'); ?></label>
-                        <div class="sifp-filter-buttons">
-                            <button type="button" class="sifp-filter-btn active" data-filter="orientation" data-value="all">
-                                <?php esc_html_e('All', 'stock-image-fetcher-pro'); ?>
-                            </button>
-                            <button type="button" class="sifp-filter-btn" data-filter="orientation" data-value="landscape">
-                                <svg width="24" height="16" viewBox="0 0 24 16">
-                                    <rect width="24" height="16" fill="currentColor" opacity="0.3" />
-                                </svg>
-                                <?php esc_html_e('Landscape', 'stock-image-fetcher-pro'); ?>
-                            </button>
-                            <button type="button" class="sifp-filter-btn" data-filter="orientation" data-value="portrait">
-                                <svg width="16" height="24" viewBox="0 0 16 24">
-                                    <rect width="16" height="24" fill="currentColor" opacity="0.3" />
-                                </svg>
-                                <?php esc_html_e('Portrait', 'stock-image-fetcher-pro'); ?>
-                            </button>
-                            <button type="button" class="sifp-filter-btn" data-filter="orientation" data-value="square">
-                                <svg width="20" height="20" viewBox="0 0 20 20">
-                                    <rect width="20" height="20" fill="currentColor" opacity="0.3" />
-                                </svg>
-                                <?php esc_html_e('Square', 'stock-image-fetcher-pro'); ?>
-                            </button>
+                    <!-- Advanced Filter Chips -->
+                    <div class="sifp-chip-bar">
+                        <!-- Sort Chip -->
+                        <div class="sifp-filter-chip" data-filter="order_by">
+                            <span class="sifp-chip-label">Sort: Relevant</span>
+                            <svg class="sifp-chip-arrow" width="10" height="6" viewBox="0 0 10 6" fill="none">
+                                <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <div class="sifp-chip-dropdown">
+                                <div class="sifp-dropdown-item active" data-value="relevant">Relevant</div>
+                                <div class="sifp-dropdown-item" data-value="latest">Newest</div>
+                            </div>
+                        </div>
+
+                        <!-- Orientation Chip -->
+                        <div class="sifp-filter-chip" data-filter="orientation">
+                            <span class="sifp-chip-label">Any Orientation</span>
+                            <svg class="sifp-chip-arrow" width="10" height="6" viewBox="0 0 10 6" fill="none">
+                                <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <div class="sifp-chip-dropdown">
+                                <div class="sifp-dropdown-item active" data-value="all">Any Orientation</div>
+                                <div class="sifp-dropdown-item" data-value="landscape">Horizontal</div>
+                                <div class="sifp-dropdown-item" data-value="portrait">Vertical</div>
+                                <div class="sifp-dropdown-item" data-value="squarish">Square</div>
+                            </div>
+                        </div>
+
+                        <!-- Color Chip -->
+                        <div class="sifp-filter-chip" data-filter="color">
+                            <span class="sifp-chip-label">Any Color</span>
+                            <svg class="sifp-chip-arrow" width="10" height="6" viewBox="0 0 10 6" fill="none">
+                                <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <div class="sifp-chip-dropdown color-grid-dropdown">
+                                <div class="sifp-dropdown-item active" data-value="all">Any Color</div>
+                                <div class="sifp-color-grid">
+                                    <div class="sifp-color-dot" data-value="white" style="background: #ffffff; border: 1px solid #ddd;" title="White"></div>
+                                    <div class="sifp-color-dot" data-value="black" style="background: #000000;" title="Black"></div>
+                                    <div class="sifp-color-dot" data-value="grey" style="background: #808080;" title="Grey"></div>
+                                    <div class="sifp-color-dot" data-value="red" style="background: #ff0000;" title="Red"></div>
+                                    <div class="sifp-color-dot" data-value="orange" style="background: #ffa500;" title="Orange"></div>
+                                    <div class="sifp-color-dot" data-value="yellow" style="background: #ffff00;" title="Yellow"></div>
+                                    <div class="sifp-color-dot" data-value="green" style="background: #008000;" title="Green"></div>
+                                    <div class="sifp-color-dot" data-value="teal" style="background: #008080;" title="Teal"></div>
+                                    <div class="sifp-color-dot" data-value="blue" style="background: #0000ff;" title="Blue"></div>
+                                    <div class="sifp-color-dot" data-value="purple" style="background: #800080;" title="Purple"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
+                    <button type="button" class="sifp-search-btn">
+                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                            <path d="M8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12zM16 16l-3.5-3.5" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" />
+                        </svg>
+                        <span><?php esc_html_e('Search Images', 'stock-image-fetcher-pro'); ?></span>
+                    </button>
                 </div>
 
                 <!-- Results Grid with Skeleton Loader -->

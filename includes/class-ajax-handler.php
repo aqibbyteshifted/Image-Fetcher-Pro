@@ -32,18 +32,20 @@ class AJAX_Handler
         $keyword = isset($_POST['keyword']) ? sanitize_text_field($_POST['keyword']) : '';
         $source = isset($_POST['source']) ? sanitize_text_field($_POST['source']) : 'freepik';
         $orientation = isset($_POST['orientation']) ? sanitize_text_field($_POST['orientation']) : '';
+        $order_by = isset($_POST['order_by']) ? sanitize_text_field($_POST['order_by']) : 'relevant';
+        $color = isset($_POST['color']) ? sanitize_text_field($_POST['color']) : '';
         $per_page = isset($_POST['per_page']) ? intval($_POST['per_page']) : 12;
 
         switch ($source) {
             case 'pexels':
-                $this->search_pexels($keyword, $orientation, $per_page);
+                $this->search_pexels($keyword, $orientation, $per_page, $order_by, $color);
                 break;
             case 'unsplash':
-                $this->search_unsplash($keyword, $orientation, $per_page);
+                $this->search_unsplash($keyword, $orientation, $per_page, $order_by, $color);
                 break;
             case 'freepik':
             default:
-                $this->search_freepik($keyword, $orientation, $per_page);
+                $this->search_freepik($keyword, $orientation, $per_page, $order_by, $color);
                 break;
         }
     }
@@ -51,26 +53,32 @@ class AJAX_Handler
     /**
      * Search Freepik
      */
-    private function search_freepik($keyword, $orientation, $per_page)
+    private function search_freepik($keyword, $orientation, $per_page, $order_by, $color)
     {
         $api_key = get_option('sifp_freepik_api_key');
         if (empty($api_key)) {
             wp_send_json_error('Freepik API Key is missing.');
         }
-        
+
         // Build API URL with correct parameters for Freepik Stock Content API
         $params = [
             'locale' => 'en-US',
             'term' => $keyword,
             'limit' => $per_page,
-            'filters[content_type][photo]' => 1
+            'filters[content_type][photo]' => 1,
+            'sort' => ($order_by === 'latest') ? 'latest' : 'relevant'
         ];
-        
+
         // Add orientation filter if specified
         if (!empty($orientation) && $orientation !== 'all') {
             $params['filters[orientation][' . $orientation . ']'] = 1;
         }
-        
+
+        // Add color filter if specified
+        if (!empty($color) && $color !== 'all') {
+            $params['filters[color]'] = $color;
+        }
+
         $api_url = add_query_arg($params, 'https://api.freepik.com/v1/resources');
 
         $response = wp_remote_get($api_url, [
@@ -95,11 +103,11 @@ class AJAX_Handler
         if (is_wp_error($response)) {
             wp_send_json_error('Freepik API Request failed: ' . $response->get_error_message());
         }
-        
+
         $response_code = wp_remote_retrieve_response_code($response);
         $body = wp_remote_retrieve_body($response);
         $data = json_decode($body, true);
-        
+
         // Handle API errors
         if ($response_code !== 200) {
             $error_message = 'Freepik API Error (Code: ' . $response_code . ')';
@@ -120,19 +128,19 @@ class AJAX_Handler
             // Get the best available image URL
             $image_url = '';
             $preview_url = '';
-            
+
             if (!empty($item['image']['source']['url'])) {
                 $image_url = $item['image']['source']['url'];
             } elseif (!empty($item['thumbnails']['large']['url'])) {
                 $image_url = $item['thumbnails']['large']['url'];
             }
-            
+
             if (!empty($item['thumbnails']['medium']['url'])) {
                 $preview_url = $item['thumbnails']['medium']['url'];
             } elseif (!empty($item['thumbnails']['small']['url'])) {
                 $preview_url = $item['thumbnails']['small']['url'];
             }
-            
+
             return [
                 'id' => $item['id'] ?? '',
                 'width' => $item['image']['width'] ?? 0,
@@ -159,7 +167,7 @@ class AJAX_Handler
     /**
      * Search Pexels
      */
-    private function search_pexels($keyword, $orientation, $per_page)
+    private function search_pexels($keyword, $orientation, $per_page, $order_by, $color)
     {
         $api_key = get_option('sifp_pexels_api_key');
         if (empty($api_key)) {
@@ -169,6 +177,9 @@ class AJAX_Handler
         $api_url = "https://api.pexels.com/v1/search?query=" . urlencode($keyword) . "&per_page=" . $per_page;
         if ($orientation && $orientation !== 'all') {
             $api_url .= "&orientation=" . $orientation;
+        }
+        if (!empty($color) && $color !== 'all') {
+            $api_url .= "&color=" . $color;
         }
 
         $response = wp_remote_get($api_url, [
@@ -196,7 +207,7 @@ class AJAX_Handler
     /**
      * Search Unsplash
      */
-    private function search_unsplash($keyword, $orientation, $per_page)
+    private function search_unsplash($keyword, $orientation, $per_page, $order_by, $color)
     {
         $api_key = get_option('sifp_unsplash_api_key');
         if (empty($api_key)) {
@@ -204,8 +215,15 @@ class AJAX_Handler
         }
 
         $api_url = "https://api.unsplash.com/search/photos?query=" . urlencode($keyword) . "&per_page=" . $per_page;
+
+        if ($order_by === 'latest') {
+            $api_url .= "&order_by=latest";
+        }
         if ($orientation && $orientation !== 'all') {
             $api_url .= "&orientation=" . $orientation;
+        }
+        if (!empty($color) && $color !== 'all') {
+            $api_url .= "&color=" . $color;
         }
 
         $response = wp_remote_get($api_url, [

@@ -8,13 +8,17 @@ jQuery(window).on('elementor:init', function () {
     var ControlStockImageFetcherPro = elementor.modules.controls.BaseData.extend({
 
         onReady: function () {
-            this.initElements();
-            this.bindEvents();
+            // Initialize state BEFORE binding events
             this.currentFilters = {
-                orientation: 'all'
+                orientation: 'all',
+                order_by: 'relevant',
+                color: 'all'
             };
             this.selectedImage = null;
             this.currentKeyword = '';
+
+            this.initElements();
+            this.bindEvents();
 
             // Handle persistence
             this.handlePersistence();
@@ -73,11 +77,12 @@ jQuery(window).on('elementor:init', function () {
                 $searchInput: this.$el.find('.sifp-search-input'),
                 $clearSearch: this.$el.find('.sifp-clear-search'),
 
-                // Filters
-                $filterBar: this.$el.find('.sifp-filter-bar'),
-                $sourceSelector: this.$el.find('.sifp-source-selector'),
-                $toggleFilters: this.$el.find('.sifp-toggle-filters'),
-                $filterBtns: this.$el.find('.sifp-filter-btn'),
+                // Filters (Chips)
+                $chipBar: this.$el.find('.sifp-chip-bar'),
+                $filterChips: this.$el.find('.sifp-filter-chip'),
+                $sourceSelector: this.$el.find('.sifp-source-input'),
+                $dropdownItems: this.$el.find('.sifp-dropdown-item'),
+                $colorDots: this.$el.find('.sifp-color-dot'),
 
                 // Results
                 $resultsContainer: this.$el.find('.sifp-results-container'),
@@ -134,8 +139,21 @@ jQuery(window).on('elementor:init', function () {
             this.elements.$clearSearch.on('click', this.onClearSearch.bind(this));
 
             // Filter events
-            this.elements.$toggleFilters.on('click', this.onToggleFilters.bind(this));
-            this.elements.$filterBtns.on('click', this.onFilterClick.bind(this));
+            // Filter Chip Toggle
+            this.elements.$filterChips.on('click', this.onChipClick.bind(this));
+
+            // Dropdown Item Selection
+            this.elements.$dropdownItems.on('click', this.onDropdownItemClick.bind(this));
+
+            // Color Dot Selection
+            this.elements.$colorDots.on('click', this.onColorDotClick.bind(this));
+
+            // Close dropdowns on outside click
+            jQuery(document).on('click', (e) => {
+                if (!jQuery(e.target).closest('.sifp-filter-chip').length) {
+                    this.elements.$filterChips.removeClass('open');
+                }
+            });
 
             // Results events
             this.elements.$resultsGrid.on('click', '.sifp-result-item', this.onThumbnailClick.bind(this));
@@ -181,31 +199,67 @@ jQuery(window).on('elementor:init', function () {
         },
 
         /**
-         * Toggle Filters
+         * Chip Click Handler
          */
-        onToggleFilters: function () {
-            this.elements.$filterBar.slideToggle(300);
+        onChipClick: function (e) {
+            e.stopPropagation();
+            var $chip = jQuery(e.currentTarget);
+            var wasOpen = $chip.hasClass('open');
+
+            this.elements.$filterChips.removeClass('open');
+            if (!wasOpen) {
+                $chip.addClass('open');
+            }
         },
 
         /**
-         * Filter Click Handler
+         * Dropdown Item Selection
          */
-        onFilterClick: function (e) {
-            var $btn = jQuery(e.currentTarget);
-            var filter = $btn.data('filter');
-            var value = $btn.data('value');
+        onDropdownItemClick: function (e) {
+            var $item = jQuery(e.currentTarget);
+            var $chip = $item.closest('.sifp-filter-chip');
+            var filter = $chip.data('filter');
+            var value = $item.data('value');
 
-            // Update active state
-            $btn.siblings().removeClass('active');
-            $btn.addClass('active');
+            $chip.find('.sifp-dropdown-item').removeClass('active');
+            $item.addClass('active');
 
-            // Store filter
             this.currentFilters[filter] = value;
 
-            // Re-search with filters
-            if (this.currentKeyword) {
-                this.performSearch(this.currentKeyword);
+            // Update UI
+            var label = $item.text();
+            if (filter === 'order_by') label = 'Sort: ' + label;
+            $chip.find('.sifp-chip-label').text(label);
+
+            if (value !== 'all' && value !== 'relevant') {
+                $chip.addClass('active');
+            } else {
+                $chip.removeClass('active');
             }
+
+            $chip.removeClass('open');
+            if (this.currentKeyword) this.performSearch(this.currentKeyword);
+        },
+
+        /**
+         * Color Dot Selection
+         */
+        onColorDotClick: function (e) {
+            var $dot = jQuery(e.currentTarget);
+            var $chip = $dot.closest('.sifp-filter-chip');
+            var value = $dot.data('value');
+
+            this.elements.$colorDots.removeClass('active');
+            $dot.addClass('active');
+
+            this.currentFilters.color = value;
+            $chip.find('.sifp-chip-label').text('Color: ' + value.charAt(0).toUpperCase() + value.slice(1));
+            $chip.find('.sifp-dropdown-item').removeClass('active');
+
+            $chip.addClass('active');
+            $chip.removeClass('open');
+
+            if (this.currentKeyword) this.performSearch(this.currentKeyword);
         },
 
         /**
@@ -241,7 +295,9 @@ jQuery(window).on('elementor:init', function () {
                 data: {
                     action: 'sifp_search',
                     keyword: keyword,
-                    orientation: orientation,
+                    orientation: self.currentFilters.orientation,
+                    order_by: self.currentFilters.order_by,
+                    color: self.currentFilters.color,
                     source: this.elements.$sourceSelector.val(),
                     per_page: 24,
                     nonce: stockFetcherProConfig.nonce
@@ -332,11 +388,26 @@ jQuery(window).on('elementor:init', function () {
          */
         showPreview: function (photo) {
             var keyword = this.currentKeyword;
+            var pageKeyword = this.getPageKeyword();
 
             // Set image
             this.elements.$previewImg.attr('src', photo.src.large);
-            this.elements.$filenameInput.val(this.sanitizeFilename(photo.alt || 'freepik-image'));
-            this.elements.$altInput.val(photo.alt || '');
+
+            // Generate filename with page keyword
+            var baseFilename = photo.alt || keyword || 'image';
+            var filename = pageKeyword
+                ? this.sanitizeFilename(baseFilename + ' ' + pageKeyword)
+                : this.sanitizeFilename(baseFilename);
+            this.elements.$filenameInput.val(filename);
+
+            // Generate alt text with page keyword
+            var altText = photo.alt || '';
+            if (pageKeyword && altText && !altText.toLowerCase().includes(pageKeyword.toLowerCase())) {
+                altText = altText + ' - ' + pageKeyword;
+            } else if (pageKeyword && !altText) {
+                altText = keyword + ' - ' + pageKeyword;
+            }
+            this.elements.$altInput.val(altText);
 
             // Set dimensions
             this.elements.$dimensions.text(photo.width + ' × ' + photo.height);
@@ -411,6 +482,51 @@ jQuery(window).on('elementor:init', function () {
             this.elements.$previewPanel.slideUp(300);
             this.elements.$resultsGrid.find('.sifp-result-item').removeClass('is-selected');
             this.selectedImage = null;
+
+            // Clear the image value to remove it from frontend
+            this.elements.$hiddenInput.val('');
+            this.setValue('');
+        },
+
+
+        /**
+         * Get Page Keyword/Title Dynamically
+         */
+        getPageKeyword: function () {
+            try {
+                var pageTitle = '';
+
+                // Method 1: Get from Elementor current document
+                if (typeof elementor !== 'undefined' && elementor.documents && elementor.documents.getCurrent) {
+                    var currentDoc = elementor.documents.getCurrent();
+                    if (currentDoc && currentDoc.config && currentDoc.config.title) {
+                        pageTitle = currentDoc.config.title;
+                    }
+                }
+
+                // Method 2: Fallback to elementor config
+                if (!pageTitle && typeof elementor !== 'undefined' && elementor.config && elementor.config.document) {
+                    pageTitle = elementor.config.document.title || elementor.config.document.post_title || '';
+                }
+
+                // Method 3: Fallback to document title
+                if (!pageTitle && document.title) {
+                    pageTitle = document.title;
+                }
+
+                // Clean up the title - remove site name and common suffixes
+                if (pageTitle) {
+                    pageTitle = pageTitle
+                        .replace(/\s*[-–|]\s*.+$/, '') // Remove everything after -, –, or |
+                        .trim();
+                }
+
+                console.log('SIFP Page Keyword:', pageTitle); // Debug log
+                return pageTitle;
+            } catch (e) {
+                console.log('SIFP: Error getting page keyword:', e);
+                return '';
+            }
         },
 
         /**

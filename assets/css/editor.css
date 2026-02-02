@@ -29,20 +29,287 @@
 }
 
 /* ============================================
-   Search Bar - Modern Design
+   Control Wrapper - Prevent Tab Blocking
    ============================================ */
 
-.sifp-search-bar {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 16px;
-    animation: slideDown 0.3s ease-out;
+.sifp-control-wrapper {
+    position: relative;
+    z-index: 1;
+    /* Ensure it doesn't block Elementor tabs */
 }
 
-@keyframes slideDown {
+.elementor-control-input-wrapper {
+    position: relative;
+}
+
+/* ============================================
+   Search Bar - Premium Unified Design
+   ============================================ */
+
+.sifp-search-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding: 2px;
+}
+
+.sifp-input-cluster {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border: 1px solid var(--sifp-gray-200);
+    border-radius: var(--sifp-radius);
+    overflow: hidden;
+    transition: var(--sifp-transition);
+    box-shadow: var(--sifp-shadow-sm);
+}
+
+.sifp-input-cluster:focus-within {
+    border-color: var(--sifp-primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+}
+
+.sifp-source-input {
+    width: 90px !important;
+    padding: 10px 8px !important;
+    border: none !important;
+    border-right: 1px solid var(--sifp-gray-100) !important;
+    background: var(--sifp-gray-50) !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    color: var(--sifp-gray-600) !important;
+    cursor: pointer !important;
+    outline: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="%236b7280"><path d="M5 7l5 5 5-5H5z"/></svg>') !important;
+    background-repeat: no-repeat !important;
+    background-position: right 4px center !important;
+    background-size: 10px !important;
+    transition: var(--sifp-transition) !important;
+}
+
+.sifp-source-input:hover {
+    background-color: var(--sifp-gray-100) !important;
+    color: var(--sifp-primary) !important;
+}
+
+.sifp-search-field-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.sifp-search-input {
+    width: 100% !important;
+    padding: 10px 35px 10px 12px !important;
+    border: none !important;
+    background: transparent !important;
+    font-size: 13px !important;
+    color: var(--sifp-gray-800) !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.sifp-search-input::placeholder {
+    color: var(--sifp-gray-400);
+    font-style: italic;
+}
+
+.sifp-clear-search {
+    position: absolute;
+    right: 8px;
+    background: var(--sifp-gray-100);
+    border: none;
+    color: var(--sifp-gray-500);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--sifp-transition);
+    z-index: 10;
+    pointer-events: auto;
+}
+
+.sifp-clear-search:hover {
+    background: var(--sifp-error);
+    color: white;
+}
+
+.sifp-search-btn {
+    width: 100%;
+    padding: 12px !important;
+    background: var(--sifp-primary) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: var(--sifp-radius) !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: var(--sifp-transition) !important;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
+}
+
+.sifp-search-btn:active {
+    transform: translateY(0);
+}
+
+/* ============================================
+   Filter Chips - Premium Design
+   ============================================ */
+
+.sifp-chip-bar {
+    display: flex;
+    gap: 8px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    flex-wrap: wrap;
+}
+
+.sifp-filter-chip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: var(--sifp-gray-50);
+    border: 1px solid var(--sifp-gray-200);
+    border-radius: 20px;
+    cursor: pointer;
+    transition: var(--sifp-transition);
+    position: relative;
+    user-select: none;
+}
+
+.sifp-filter-chip:hover {
+    background: white;
+    border-color: var(--sifp-primary-light);
+    box-shadow: var(--sifp-shadow-sm);
+}
+
+.sifp-filter-chip.active {
+    background: rgba(99, 102, 241, 0.08);
+    border-color: var(--sifp-primary);
+    color: var(--sifp-primary);
+}
+
+.sifp-chip-label {
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.sifp-chip-arrow {
+    transition: transform 0.2s ease;
+    color: var(--sifp-gray-400);
+}
+
+.sifp-filter-chip.open .sifp-chip-arrow {
+    transform: rotate(180deg);
+    color: var(--sifp-primary);
+}
+
+/* Dropdown Menu */
+.sifp-chip-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    z-index: 1000;
+    background: white;
+    min-width: 150px;
+    border-radius: 10px;
+    box-shadow: var(--sifp-shadow-lg);
+    border: 1px solid var(--sifp-gray-100);
+    padding: 6px;
+    display: none !important;
+    animation: sifpFadeInUp 0.2s ease-out;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.sifp-filter-chip.open .sifp-chip-dropdown {
+    display: block !important;
+    visibility: visible;
+    opacity: 1;
+}
+
+.sifp-dropdown-item {
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 6px;
+    transition: background 0.2s;
+    color: var(--sifp-gray-700);
+    cursor: pointer;
+}
+
+/* Ensure dropdown items are hidden when parent is not open */
+.sifp-filter-chip:not(.open) .sifp-dropdown-item {
+    display: none !important;
+}
+
+.sifp-filter-chip:not(.open) .sifp-color-grid {
+    display: none !important;
+}
+
+.sifp-dropdown-item:hover {
+    background: var(--sifp-gray-50);
+    color: var(--sifp-primary);
+}
+
+.sifp-dropdown-item.active {
+    background: var(--sifp-primary);
+    color: white !important;
+}
+
+/* Color Grid Specifics */
+.color-grid-dropdown {
+    min-width: 190px;
+}
+
+.sifp-color-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    padding: 8px;
+    border-top: 1px solid var(--sifp-gray-100);
+    margin-top: 6px;
+}
+
+.sifp-color-dot {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.sifp-color-dot:hover {
+    transform: scale(1.15);
+    box-shadow: 0 0 0 2px white, 0 0 0 4px var(--sifp-primary);
+}
+
+.sifp-color-dot.active {
+    box-shadow: 0 0 0 2px white, 0 0 0 4px var(--sifp-primary);
+}
+
+@keyframes sifpFadeInUp {
     from {
         opacity: 0;
-        transform: translateY(-10px);
+        transform: translateY(8px);
     }
 
     to {
@@ -51,102 +318,8 @@
     }
 }
 
-.sifp-search-input-wrapper {
-    position: relative;
-    flex: 1;
-    display: flex;
-    align-items: center;
-    background: white;
-    border: 2px solid var(--sifp-gray-200);
-    border-radius: var(--sifp-radius);
-    transition: var(--sifp-transition);
-    overflow: hidden;
-}
-
-.sifp-search-input-wrapper:focus-within {
-    border-color: var(--sifp-primary);
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-}
-
-.sifp-search-icon {
-    display: none;
-    position: absolute;
-    left: 12px;
-    color: var(--sifp-gray-400);
-    pointer-events: none;
-    transition: var(--sifp-transition);
-}
-
-.sifp-search-input-wrapper:focus-within .sifp-search-icon {
-    color: var(--sifp-primary);
-}
-
-.sifp-search-input {
-    flex: 1;
-    padding: 12px 40px 12px 12px;
-    border: none;
-    background: transparent;
-    font-size: 14px;
-    color: var(--sifp-gray-900);
-    outline: none;
-}
-
-.sifp-source-selector {
-    padding: 8px 32px 8px 12px;
-    border: none;
-    border-right: 2px solid var(--sifp-gray-100);
-    background: var(--sifp-gray-50);
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--sifp-gray-700);
-    cursor: pointer;
-    outline: none;
-    appearance: none;
-    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="%236b7280"><path d="M5 7l5 5 5-5H5z"/></svg>');
-    background-repeat: no-repeat;
-    background-position: right 8px center;
-    background-size: 12px;
-}
-
-.sifp-source-selector:hover {
-    background-color: var(--sifp-gray-100);
-}
-
-.sifp-search-input::placeholder {
-    color: var(--sifp-gray-400);
-}
-
-.sifp-clear-search {
-    position: absolute;
-    right: 8px;
-    padding: 6px;
-    background: transparent;
-    border: none;
-    color: var(--sifp-gray-400);
-    cursor: pointer;
-    border-radius: 4px;
-    transition: var(--sifp-transition);
-}
-
-.sifp-clear-search:hover {
-    background: var(--sifp-gray-100);
-    color: var(--sifp-gray-600);
-}
-
-.sifp-search-btn {
-    padding: 12px 20px;
-    background: var(--sifp-primary);
-    color: white;
-    border: none;
-    border-radius: var(--sifp-radius);
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: var(--sifp-transition);
-    white-space: nowrap;
+.sifp-search-btn:active {
+    transform: translateY(0);
 }
 
 .sifp-search-btn:hover {
@@ -174,55 +347,52 @@
 }
 
 /* ============================================
-   Filter Bar - Compact & Modern
+   Filters - Premium Chips
    ============================================ */
 
 .sifp-filter-bar {
     padding: 16px;
     background: var(--sifp-gray-50);
     border-radius: var(--sifp-radius);
-    margin-bottom: 16px;
+    margin-bottom: 20px;
     border: 1px solid var(--sifp-gray-200);
-    animation: slideDown 0.3s ease-out;
-}
-
-.sifp-filter-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
 }
 
 .sifp-filter-group label {
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--sifp-gray-700);
+    display: block;
+    font-size: 11px;
+    font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
+    color: var(--sifp-gray-500);
+    margin-bottom: 10px;
 }
 
 .sifp-filter-buttons {
     display: flex;
-    gap: 8px;
     flex-wrap: wrap;
+    gap: 8px;
 }
 
 .sifp-filter-btn {
-    padding: 8px 12px;
+    padding: 8px 14px;
     background: white;
-    border: 2px solid var(--sifp-gray-200);
-    border-radius: var(--sifp-radius-sm);
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--sifp-gray-700);
+    border: 1px solid var(--sifp-gray-200);
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--sifp-gray-600);
     cursor: pointer;
-    transition: var(--sifp-transition);
     display: flex;
     align-items: center;
     gap: 6px;
+    transition: var(--sifp-transition);
 }
 
 .sifp-filter-btn:hover {
-    border-color: var(--sifp-gray-300);
+    border-color: var(--sifp-primary-light);
+    color: var(--sifp-primary);
     background: var(--sifp-gray-50);
 }
 
@@ -230,28 +400,51 @@
     background: var(--sifp-primary);
     border-color: var(--sifp-primary);
     color: white;
+    box-shadow: 0 4px 10px rgba(99, 102, 241, 0.2);
 }
 
 .sifp-filter-btn svg {
-    opacity: 0.6;
+    width: 14px;
+    height: 14px;
 }
 
 /* ============================================
-   Results Header
+   Results Header & Grid
    ============================================ */
 
 .sifp-results-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 12px;
-    padding: 8px 0;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--sifp-gray-100);
 }
 
 .sifp-results-count {
     font-size: 13px;
-    color: var(--sifp-gray-600);
-    font-weight: 500;
+    font-weight: 700;
+    color: var(--sifp-gray-700);
+}
+
+.sifp-toggle-filters {
+    padding: 8px 12px;
+    background: white;
+    border: 1px solid var(--sifp-gray-200);
+    border-radius: var(--sifp-radius-sm);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--sifp-gray-700);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--sifp-transition);
+}
+
+.sifp-toggle-filters:hover {
+    background: var(--sifp-gray-50);
+    border-color: var(--sifp-gray-300);
 }
 
 .sifp-toggle-filters {
@@ -692,6 +885,8 @@ input:checked+.sifp-toggle-slider:before {
     background: var(--sifp-gray-200);
     outline: none;
     -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 }
 
 .sifp-quality-input::-webkit-slider-thumb {
